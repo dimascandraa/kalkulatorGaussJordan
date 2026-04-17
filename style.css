@@ -1,0 +1,145 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Agar tidak terlalu ke bawah jika konten panjang */
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    padding: 30px; /* Padding merata di semua sisi */
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px; /* Lebar maksimal agar tidak terlalu lebar di monitor besar */
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Memperbaiki Matrix Row agar input tidak berantakan */
+.matrix-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+input {
+    width: 60px;
+    height: 45px;
+    text-align: center;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 18px;
+    transition: all 0.3s;
+}
+
+input:focus {
+    border-color: #1a73e8;
+    outline: none;
+    background: #f0f7ff;
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+}
+
+/* Keypad Grid perbaikan */
+.keypad-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 350px; /* Diperlebar sedikit agar tombol proporsional */
+    margin: 25px auto;
+}
+
+.keypad-grid button {
+    height: 55px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.keypad-grid button:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.keypad-grid button:active {
+    transform: scale(0.95);
+}
+
+/* Tombol Aksi */
+.btn-solve {
+    grid-column: span 3;
+    background: #34a853 !important;
+    color: white;
+    font-size: 20px !important;
+}
+
+.btn-back { background: #ff9800 !important; color: white; }
+.btn-clear { background: #ea4335 !important; color: white; }
+
+/* Wadah hasil dan langkah-langkah */
+#steps-container {
+    margin-top: 30px;
+    text-align: left;
+    background: #fafafa;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    line-height: 1.6;
+}
+
+.step-box {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #cbd5e1;
+}
+
+.notation {
+    color: #d9534f;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 600px) {
+    /* Menghilangkan background abu-abu body agar menyatu */
+    body {
+        background: white; /* Mengikuti warna container */
+        padding: 0;        /* Menghilangkan jarak di pinggir layar */
+        display: block;    /* Agar konten mulai dari paling atas */
+    }
+
+    .container {
+        width: 100%;        /* Paksa lebar memenuhi layar HP */
+        max-width: 100%;    /* Menghapus batasan lebar */
+        min-height: 100vh;  /* Paksa tinggi memenuhi layar HP */
+        border-radius: 0;   /* Menghilangkan lengkungan sudut agar terlihat full */
+        box-shadow: none;   /* Menghilangkan bayangan agar lebih bersih di HP */
+        padding: 20px 15px; /* Memberi ruang di dalam agar teks tidak mepet */
+        margin: 0;
+    }
+
+    /* Memastikan keypad dan input matriks tetap rapi dan tidak terlalu kecil */
+    .keypad-grid {
+        max-width: 100%; 
+        gap: 12px;
+    }
+
+    input {
+        width: 50px; /* Sedikit diperbesar agar mudah diklik di HP */
+        height: 45px;
+    }
+
+    .btn-solve {
+        width: 100% !important; /* Tombol hitung memenuhi lebar bawah */
+        margin-top: 20px;
+    }
+}

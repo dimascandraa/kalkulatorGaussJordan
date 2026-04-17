@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Kalkulator Gauss-Jordan dengan Simbol</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Kalkulator Gauss-Jordan</h1>
+        <h4>by Dimas & Rida'</h4>
+
+        <div class="setup">
+            <label>Variabel: </label>
+            <input type="number" id="size" value="3" readonly>
+            <button onclick="changeSize(1)">+</button>
+            <button onclick="changeSize(-1)">-</button>
+            <button class="btn-create" onclick="generateMatrix()">Buat Matriks</button>
+        </div>
+
+        <div id="matrix-container" class="matrix-grid"></div>
+
+        <div class="keypad">
+            <div class="keypad-grid">
+                <button onclick="pressKey('7')">7</button>
+                <button onclick="pressKey('8')">8</button>
+                <button onclick="pressKey('9')">9</button>
+
+                <button onclick="pressKey('4')">4</button>
+                <button onclick="pressKey('5')">5</button>
+                <button onclick="pressKey('6')">6</button>
+
+                <button onclick="pressKey('1')">1</button>
+                <button onclick="pressKey('2')">2</button>
+                <button onclick="pressKey('3')">3</button>
+
+                <button onclick="pressKey('-')">-</button>
+                <button onclick="pressKey('0')">0</button>
+                <button onclick="pressKey('.')">.</button>
+
+                <button class="btn-back" onclick="pressKey('backspace')">⌫</button>
+                <button class="btn-clear" onclick="pressKey('clear')">C</button>
+                <button class="btn-solve" onclick="solveGaussJordan()">HITUNG</button>
+            </div>
+        </div>
+
+
+        <div id="steps-container"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
