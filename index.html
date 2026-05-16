@@ -14,7 +14,7 @@
 
         <div class="setup">
             <label>Variabel: </label>
-            <input type="number" id="size" value="3" readonly>
+            <input type="number" id="size" value="3" min="2" max="100" oninput="validateSize()">
             <button onclick="changeSize(1)">+</button>
             <button onclick="changeSize(-1)">-</button>
             <button class="btn-create" onclick="generateMatrix()">Buat Matriks</button>
