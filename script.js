@@ -1,13 +1,40 @@
 let currentInput = null;
 
 function generateMatrix() {
-    const n = document.getElementById('size').value;
+    const n = parseInt(document.getElementById('size').value) || 3;
+    updateMatrixColumnWidth(n);
     const container = document.getElementById('matrix-container');
     container.innerHTML = '';
+
+    // Header: empty cell for row numbers, then x1..xn and b
+    const header = document.createElement('div');
+    header.className = 'matrix-row matrix-header';
+    const headerLeft = document.createElement('div');
+    headerLeft.className = 'row-number row-number-header';
+    headerLeft.textContent = '';
+    header.appendChild(headerLeft);
+    for (let j = 0; j < n; j++) {
+        const label = document.createElement('div');
+        label.className = 'col-label';
+        label.textContent = `x${j+1}`;
+        header.appendChild(label);
+    }
+    const lastLabel = document.createElement('div');
+    lastLabel.className = 'col-label';
+    lastLabel.textContent = 'b';
+    header.appendChild(lastLabel);
+    container.appendChild(header);
 
     for (let i = 0; i < n; i++) {
         let row = document.createElement('div');
         row.className = 'matrix-row';
+
+        // Row number on the left
+        const rn = document.createElement('div');
+        rn.className = 'row-number';
+        rn.textContent = (i + 1);
+        row.appendChild(rn);
+
         for (let j = 0; j <= n; j++) {
             let input = document.createElement('input'); // 1. Buat elemen
             input.type = 'text';
@@ -22,8 +49,8 @@ function generateMatrix() {
         }
         container.appendChild(row);
     }
-    
-    // 3. Fokus otomatis ke kotak pertama setelah semua dibuat
+
+    // Fokus otomatis ke kotak pertama setelah semua dibuat
     currentInput = document.getElementById('c-0-0');
     if (currentInput) currentInput.focus();
 }
@@ -75,7 +102,15 @@ function validateSize() {
     }
 }
 
-window.onload = generateMatrix;
+window.addEventListener('load', function() {
+    initTheme();
+    generateMatrix();
+});
+
+window.addEventListener('resize', function() {
+    const size = parseInt(document.getElementById('size').value) || 3;
+    updateMatrixColumnWidth(size);
+});
 
 function determineSolutionType(a, n) {
     // Cek apakah ada baris dengan semua koefisien 0 tetapi konstanta ≠ 0 (tidak ada solusi)
@@ -195,4 +230,40 @@ function solveGaussJordan() {
 
 function formatMatrix(m) {
     return m.map(row => "[" + row.map(val => val.toFixed(2).padStart(6)).join(", ") + "]").join("<br>");
+}
+
+function updateMatrixColumnWidth(n) {
+    const matrixContainer = document.getElementById('matrix-container');
+    const containerWidth = matrixContainer ? matrixContainer.clientWidth : window.innerWidth - 120;
+    const rowNumberWidth = 36;
+    const gap = 10;
+    const columnCount = n + 1; // n variables + b
+    const totalGaps = columnCount; // one gap after row number plus gaps between each input
+    const availableWidth = Math.max(containerWidth - rowNumberWidth - gap * totalGaps, 180);
+    const calculatedWidth = Math.floor(availableWidth / columnCount);
+    const width = Math.max(36, Math.min(calculatedWidth, 140));
+    document.documentElement.style.setProperty('--matrix-input-width', width + 'px');
+}
+
+/* ------------------ Theme (Dark Mode) ------------------ */
+function applyTheme(theme) {
+    if (theme === 'dark') document.body.classList.add('dark');
+    else document.body.classList.remove('dark');
+    try { localStorage.setItem('theme', theme); } catch(e){}
+}
+
+function initTheme() {
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = saved ? saved : (prefersDark ? 'dark' : 'light');
+    applyTheme(theme);
+
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌓';
+    btn.addEventListener('click', function() {
+        const newTheme = document.body.classList.contains('dark') ? 'light' : 'dark';
+        applyTheme(newTheme);
+        btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌓';
+    });
 }

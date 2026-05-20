@@ -1,23 +1,64 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f0f2f5;
+    background: linear-gradient(180deg, #eef2f7 0%, #f7fafc 100%);
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Agar tidak terlalu ke bawah jika konten panjang */
+    align-items: flex-start;
     min-height: 100vh;
     margin: 0;
-    padding: 20px;
+    padding: 40px 30px;
+}
+
+/* Theme variables */
+:root {
+    --bg: #f7fafc;
+    --container-bg: #ffffff;
+    --text: #111827;
+    --muted: #6b7280;
+    --input-bg: #ffffff;
+    --input-border: #e2e8f0;
+    --card: #fafafa;
+    --matrix-input-width: 60px;
+    --accent: #1a73e8;
+    --success: #34a853;
+    --warning: #ff9800;
+    --danger: #ea4335;
+}
+
+/* Dark theme overrides (applied when <body> has class "dark") */
+body.dark {
+    --bg: #071022;
+    --container-bg: #0b1220;
+    --text: #e6eef8;
+    --muted: #9aa6b2;
+    --input-bg: #081226;
+    --input-border: #1f2b3a;
+    --card: #071722;
+    --accent: #60a5fa;
+    --success: #34d399;
+    --warning: #ffb86b;
+    --danger: #ff6b6b;
+    background: linear-gradient(180deg, #0f1724 0%, #071022 100%);
 }
 
 .container {
-    background: white;
-    padding: 30px; /* Padding merata di semua sisi */
+    background: var(--container-bg);
+    padding: 36px; /* Padding merata di semua sisi */
     border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 14px 40px rgba(20, 30, 60, 0.08);
     width: 100%;
-    max-width: 600px; /* Lebar maksimal agar tidak terlalu lebar di monitor besar */
+    max-width: 1100px; /* Lebar maksimal untuk desktop */
     text-align: center;
     box-sizing: border-box;
+    color: var(--text);
+}
+
+/* Grid utama: konten matriks di kiri, keypad di kanan pada layar lebar */
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 32px;
+    align-items: start;
 }
 
 /* Memperbaiki Matrix Row agar input tidak berantakan */
@@ -28,21 +69,43 @@ body {
     gap: 10px;
 }
 
+/* Column labels above inputs */
+.matrix-header { margin-bottom: 6px; }
+.col-label {
+    width: var(--matrix-input-width);
+    text-align: center;
+    font-weight: 700;
+    color: var(--muted);
+    padding: 8px 4px;
+}
+
+/* Row number on the left */
+.row-number {
+    width: 36px;
+    text-align: center;
+    color: var(--muted);
+    font-weight: 700;
+    padding: 8px 4px;
+}
+.row-number-header { width: 36px; }
+
 input {
-    width: 60px;
+    width: var(--matrix-input-width);
     height: 45px;
     text-align: center;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--input-border);
     border-radius: 8px;
     font-size: 18px;
-    transition: all 0.3s;
+    transition: all 0.2s;
+    background: var(--input-bg);
+    color: var(--text);
 }
 
 input:focus {
-    border-color: #1a73e8;
+    border-color: var(--accent);
     outline: none;
-    background: #f0f7ff;
-    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+    background: rgba(26, 115, 232, 0.04);
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.08);
 }
 
 /* Keypad Grid perbaikan */
@@ -50,7 +113,7 @@ input:focus {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
-    max-width: 350px; /* Diperlebar sedikit agar tombol proporsional */
+    max-width: 380px; /* Diperlebar sedikit agar tombol proporsional */
     margin: 25px auto;
 }
 
@@ -59,10 +122,11 @@ input:focus {
     font-size: 18px;
     font-weight: 600;
     border-radius: 10px;
-    border: 1px solid #e2e8f0;
-    background: #fff;
+    border: 1px solid var(--input-border);
+    background: var(--container-bg);
+    color: var(--text);
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.15s;
 }
 
 .keypad-grid button:hover {
@@ -89,9 +153,9 @@ input:focus {
 #steps-container {
     margin-top: 30px;
     text-align: left;
-    background: #fafafa;
+    background: var(--card);
     padding: 20px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--input-border);
     border-radius: 12px;
     line-height: 1.6;
 }
@@ -110,52 +174,73 @@ input:focus {
 }
 
 .spl-equation {
-    background: #e8f4f8;
+    background: rgba(26, 115, 232, 0.08);
     padding: 12px 15px;
     margin: 10px 0;
-    border-left: 4px solid #1a73e8;
+    border-left: 4px solid var(--accent);
     border-radius: 6px;
     font-size: 18px;
     font-weight: 500;
-    color: #333;
+    color: var(--text);
     text-align: center;
 }
 
 .solution {
-    background: #c8e6c9;
+    background: rgba(52, 168, 83, 0.08);
     padding: 10px 15px;
     margin: 8px 0;
-    border-left: 4px solid #34a853;
+    border-left: 4px solid var(--success);
     border-radius: 6px;
     font-size: 16px;
     font-weight: 600;
-    color: #1b5e20;
+    color: var(--text);
     text-align: center;
 }
 
 .conclusion {
-    background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+    background: linear-gradient(135deg, rgba(255, 184, 108, 0.08) 0%, rgba(255, 214, 140, 0.06) 100%);
     padding: 15px 20px;
     margin-top: 25px;
-    border-left: 5px solid #ff9800;
+    border-left: 5px solid var(--warning);
     border-radius: 8px;
     font-size: 18px;
     font-weight: 700;
-    color: #f57f17;
+    color: var(--text);
     text-align: center;
-    box-shadow: 0 2px 8px rgba(255, 152, 0, 0.2);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .matrix-display {
     font-family: 'Courier New', monospace;
-    background: #fff;
+    background: var(--input-bg);
     padding: 12px;
     margin: 8px 0;
     border-radius: 6px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--input-border);
     font-size: 14px;
+    color: var(--text);
 }
 
+/* Theme toggle UI */
+.theme-row { display:flex; justify-content:center; align-items:center; gap:10px; margin-bottom:12px; }
+.theme-label { color: var(--muted); font-weight:600; }
+.theme-toggle { border: none; background: transparent; font-size:20px; cursor:pointer; padding:6px 10px; border-radius:8px; }
+body.dark .theme-toggle { background: rgba(255,255,255,0.04); }
+
+/* Tablet layout */
+@media (max-width: 1024px) and (min-width: 601px) {
+    .container {
+        max-width: 900px;
+        padding: 28px;
+    }
+
+    .main-grid {
+        grid-template-columns: 1fr 360px;
+        gap: 22px;
+    }
+}
+
+/* Mobile layout */
 @media (max-width: 600px) {
     /* Menghilangkan background abu-abu body agar menyatu */
     body {
@@ -189,4 +274,10 @@ input:focus {
         width: 100% !important; /* Tombol hitung memenuhi lebar bawah */
         margin-top: 20px;
     }
+}
+
+/* Very small devices: reduce input sizes slightly */
+@media (max-width: 380px) {
+    input { width: 44px; height: 42px; }
+    .keypad-grid button { height: 50px; font-size: 16px; }
 }

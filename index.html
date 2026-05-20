@@ -12,6 +12,11 @@
         <h1>Kalkulator Gauss-Jordan</h1>
         <h4>by Dimas & Rida'</h4>
 
+        <div class="theme-row">
+            <label class="theme-label">Tema:</label>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌓</button>
+        </div>
+
         <div class="setup">
             <label>Variabel: </label>
             <input type="number" id="size" value="3" min="2" max="100" oninput="validateSize()">
@@ -19,10 +24,11 @@
             <button onclick="changeSize(-1)">-</button>
             <button class="btn-create" onclick="generateMatrix()">Buat Matriks</button>
         </div>
+        
+        <div class="main-grid">
+            <div id="matrix-container" class="matrix-grid"></div>
 
-        <div id="matrix-container" class="matrix-grid"></div>
-
-        <div class="keypad">
+            <div class="keypad">
             <div class="keypad-grid">
                 <button onclick="pressKey('7')">7</button>
                 <button onclick="pressKey('8')">8</button>
@@ -43,6 +49,7 @@
                 <button class="btn-back" onclick="pressKey('backspace')">⌫</button>
                 <button class="btn-clear" onclick="pressKey('clear')">C</button>
                 <button class="btn-solve" onclick="solveGaussJordan()">HITUNG</button>
+                </div>
             </div>
         </div>
 
